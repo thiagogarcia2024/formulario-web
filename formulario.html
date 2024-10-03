@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário de Links</title>
+</head>
+<body>
+    <h2>Formulário de Links</h2>
+    <form id="linkForm">
+        <label for="name">Seu Nome:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="link">Link:</label><br>
+        <input type="url" id="link" name="link" required><br><br>
+        
+        <button type="submit">Enviar</button>
+    </form>
+    
+    <script>
+        document.getElementById('linkForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const link = document.getElementById('link').value;
+            
+            // Enviar os dados para o Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbyuwnYg6KEgguNSBL6H06Lvyg8GKgUcfrWVK-HeRBT0D_ns1GzeTPewpgmaYEzIOKKI/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: name, link: link })
+            }).then(response => {
+                alert('Formulário enviado com sucesso!');
+                document.getElementById('linkForm').reset();
+            }).catch(error => {
+                alert('Houve um erro ao enviar o formulário.');
+            });
+        });
+    </script>
+</body>
+</html>
